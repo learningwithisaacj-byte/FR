@@ -31,9 +31,7 @@ export default async function RegisterSuccessPage({
           </p>
         )}
 
-        <p className="mt-6 text-sm text-neutral-500 dark:text-neutral-400">
-          A confirmation email has been sent to your inbox.
-        </p>
+
 
         <div className="mt-6 border-t border-neutral-200 pt-4 text-sm text-neutral-500 dark:border-neutral-800 dark:text-neutral-400">
           <p className="font-medium text-neutral-700 dark:text-neutral-300">FR Shift 2030</p>
