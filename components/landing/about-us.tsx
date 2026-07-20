@@ -11,7 +11,7 @@ export function AboutUs(): React.JSX.Element {
     >
       <div className="mx-auto max-w-3xl px-6">
         <Image
-          src="/finding-roots-logo.png"
+          src="/FR-Logo.png"
           alt="FindingRoots — HR Consulting, Corporate Training, Coaching and Mentoring"
           width={160}
           height={80}
