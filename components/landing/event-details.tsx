@@ -6,13 +6,13 @@ import { EVENT_CITY, EVENT_VENUE } from "@/lib/constants/site";
 
 export function EventDetails(): React.JSX.Element {
   return (
-    <section id="event-details" className="scroll-mt-24 bg-neutral-950 py-24 sm:py-32">
+    <section id="event-details" className="scroll-mt-24 bg-neutral-50 py-24 dark:bg-neutral-950 sm:py-32">
       <div className="mx-auto max-w-3xl px-6 text-center">
-        <p className="text-sm font-semibold uppercase tracking-widest text-lime-400">
+        <p className="text-sm font-semibold uppercase tracking-widest text-lime-600 dark:text-lime-400">
           FR Shift 2030
         </p>
 
-        <h2 className="mt-3 font-[family-name:var(--font-heading)] text-3xl font-bold text-neutral-50 sm:text-5xl">
+        <h2 className="mt-3 font-[family-name:var(--font-heading)] text-3xl font-bold text-neutral-900 dark:text-neutral-50 sm:text-5xl">
           The countdown has begun
         </h2>
 
@@ -20,7 +20,7 @@ export function EventDetails(): React.JSX.Element {
           <CountdownTimer />
         </div>
 
-        <p className="mt-12 text-neutral-400">
+        <p className="mt-12 text-neutral-600 dark:text-neutral-400">
           {EVENT_VENUE}
           <br />
           {EVENT_CITY}
@@ -28,7 +28,7 @@ export function EventDetails(): React.JSX.Element {
 
         <Link
           href="/register"
-          className="mt-8 inline-block rounded-md bg-lime-400 px-8 py-3 text-sm font-semibold text-neutral-950 transition hover:bg-lime-300"
+          className="mt-8 inline-block rounded-md bg-lime-500 px-8 py-3 text-sm font-semibold text-neutral-950 transition hover:bg-lime-400 dark:bg-lime-400 dark:hover:bg-lime-300"
         >
           Register Now
         </Link>

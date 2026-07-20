@@ -32,10 +32,10 @@ function CountdownUnit({
 }: CountdownUnitProps): React.JSX.Element {
   return (
     <div className="flex flex-col items-center">
-      <span className="font-[family-name:var(--font-heading)] text-3xl font-bold text-neutral-50 sm:text-5xl">
+      <span className="font-[family-name:var(--font-heading)] text-3xl font-bold text-neutral-900 dark:text-neutral-50 sm:text-5xl">
         {String(value).padStart(2, "0")}
       </span>
-      <span className="mt-1 text-xs uppercase tracking-widest text-neutral-500">
+      <span className="mt-1 text-xs uppercase tracking-widest text-neutral-500 dark:text-neutral-400">
         {label}
       </span>
     </div>
