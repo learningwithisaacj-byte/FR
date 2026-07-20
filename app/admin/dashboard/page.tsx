@@ -14,7 +14,6 @@ import type {
   RegistrationStatus,
 } from "@/types/participant";
 
-
 const STATUS_FILTER_OPTIONS: Array<RegistrationStatus | "ALL"> = [
   "ALL",
   "PENDING",
@@ -28,12 +27,14 @@ function exportToCsv(participants: Participant[]): void {
     "Name",
     "Email",
     "Mobile",
-    "Company",
+    "LinkedIn URL",
     "Designation",
+    "Company",
     "Industry",
     "Company Size",
     "City",
     "Involvement",
+    "Consent",
     "Status",
     "Registered At",
   ];
@@ -43,12 +44,14 @@ function exportToCsv(participants: Participant[]): void {
     participant.fullName,
     participant.email,
     participant.mobile,
-    participant.company,
+    participant.linkedinUrl ?? "",
     participant.designation,
+    participant.company,
     participant.industry,
     participant.companySize,
     participant.city,
     participant.involvementType,
+    participant.consent ? "Yes" : "No",
     participant.status,
     participant.createdAt,
   ]);
@@ -139,9 +142,15 @@ export default function AdminDashboardPage(): React.JSX.Element {
     void fetchParticipants();
   }, [fetchParticipants]);
 
-  useEffect(() => {
+  const handleSearchChange = (value: string): void => {
+    setSearch(value);
     setPage(1);
-  }, [debouncedSearch, statusFilter]);
+  };
+
+  const handleStatusFilterChange = (value: RegistrationStatus | "ALL"): void => {
+    setStatusFilter(value);
+    setPage(1);
+  };
 
   const handleStatusChange = async (
     participantId: string,
@@ -176,10 +185,10 @@ export default function AdminDashboardPage(): React.JSX.Element {
     <main className="min-h-screen bg-neutral-50 px-4 py-10 dark:bg-neutral-950">
       <div className="mx-auto max-w-6xl space-y-6">
         <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-neutral-900 dark:text-neutral-50">
+          <h1 className="text-2xl font-bold text-neutral-900 dark:text-neutral-50">
             Admin Dashboard
-        </h1>
-        <LogoutButton />
+          </h1>
+          <LogoutButton />
         </div>
 
         <SummaryCards counts={counts} isLoading={countsLoading} />
@@ -196,13 +205,13 @@ export default function AdminDashboardPage(): React.JSX.Element {
               type="text"
               placeholder="Search name, company, email, code..."
               value={search}
-              onChange={(event) => setSearch(event.target.value)}
+              onChange={(event) => handleSearchChange(event.target.value)}
               className="w-full max-w-sm rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-50"
             />
             <select
               value={statusFilter}
               onChange={(event) =>
-                setStatusFilter(event.target.value as RegistrationStatus | "ALL")
+                handleStatusFilterChange(event.target.value as RegistrationStatus | "ALL")
               }
               className="rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-50"
             >

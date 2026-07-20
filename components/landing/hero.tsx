@@ -1,19 +1,15 @@
 // /components/landing/hero.tsx
 
-import Image from "next/image";
 import Link from "next/link";
+import { StairsGraphic } from "@/components/landing/stairs-graphic";
+import Image from "next/image";
 
 export function Hero(): React.JSX.Element {
   return (
-    <section className="relative overflow-hidden bg-neutral-950">
+    <section id="hero" className="relative overflow-hidden bg-neutral-950">
       <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 px-6 py-16 sm:py-20 lg:grid-cols-2 lg:py-28">
         <div className="order-2 lg:order-1">
-          <div className="flex items-center gap-2 text-sm font-semibold tracking-wide text-sky-400">
-            <span className="text-sky-400">FR</span>
-            <span className="text-lime-400">SHIFT</span>
-          </div>
-
-          <h1 className="mt-4 font-serif text-4xl font-bold leading-tight text-neutral-50 sm:text-5xl lg:text-6xl">
+          <h1 className="font-[family-name:var(--font-heading)] text-4xl font-bold leading-tight text-neutral-50 sm:text-5xl lg:text-6xl">
             Curating Boardroom Conversations
           </h1>
 
@@ -40,14 +36,16 @@ export function Hero(): React.JSX.Element {
         </div>
 
         <div className="order-1 flex justify-center lg:order-2">
+                  <div className="order-1 flex justify-center lg:order-2">
           <Image
-            src="/fr-shift-poster.png"
+            src="/fr-shift-hero.png"
             alt="FR Shift 2030 — a staircase of years from 2026 to 2030 lit in neon, representing the path to future readiness"
             width={640}
             height={1067}
             priority
             className="h-auto w-full max-w-sm drop-shadow-2xl"
           />
+        </div>
         </div>
       </div>
     </section>

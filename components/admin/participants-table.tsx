@@ -24,6 +24,18 @@ function formatDate(isoDate: string): string {
   });
 }
 
+interface ColumnHeaderProps {
+  label: string;
+}
+
+function ColumnHeader({ label }: ColumnHeaderProps): React.JSX.Element {
+  return (
+    <th className="whitespace-nowrap px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
+      {label}
+    </th>
+  );
+}
+
 export function ParticipantsTable({
   participants,
   isLoading,
@@ -51,27 +63,20 @@ export function ParticipantsTable({
       <table className="min-w-full divide-y divide-neutral-200 dark:divide-neutral-800">
         <thead className="bg-neutral-50 dark:bg-neutral-900">
           <tr>
-            <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
-              Code
-            </th>
-            <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
-              Name
-            </th>
-            <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
-              Company
-            </th>
-            <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
-              Designation
-            </th>
-            <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
-              Industry
-            </th>
-            <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
-              Status
-            </th>
-            <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
-              Registered
-            </th>
+            <ColumnHeader label="Code" />
+            <ColumnHeader label="Name" />
+            <ColumnHeader label="Email" />
+            <ColumnHeader label="Mobile" />
+            <ColumnHeader label="LinkedIn" />
+            <ColumnHeader label="Designation" />
+            <ColumnHeader label="Company" />
+            <ColumnHeader label="Industry" />
+            <ColumnHeader label="Company Size" />
+            <ColumnHeader label="City" />
+            <ColumnHeader label="Involvement" />
+            <ColumnHeader label="Consent" />
+            <ColumnHeader label="Status" />
+            <ColumnHeader label="Registered" />
           </tr>
         </thead>
         <tbody className="divide-y divide-neutral-200 bg-white dark:divide-neutral-800 dark:bg-neutral-900">
@@ -84,13 +89,45 @@ export function ParticipantsTable({
                 {participant.fullName}
               </td>
               <td className="whitespace-nowrap px-4 py-3 text-sm text-neutral-700 dark:text-neutral-300">
-                {participant.company}
+                {participant.email}
+              </td>
+              <td className="whitespace-nowrap px-4 py-3 text-sm text-neutral-700 dark:text-neutral-300">
+                {participant.mobile}
+              </td>
+              <td className="whitespace-nowrap px-4 py-3 text-sm text-neutral-700 dark:text-neutral-300">
+                {participant.linkedinUrl ? (
+                  <a
+                    href={participant.linkedinUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sky-600 hover:underline dark:text-sky-400"
+                  >
+                    View
+                  </a>
+                ) : (
+                  <span className="text-neutral-400 dark:text-neutral-600">—</span>
+                )}
               </td>
               <td className="whitespace-nowrap px-4 py-3 text-sm text-neutral-700 dark:text-neutral-300">
                 {participant.designation}
               </td>
               <td className="whitespace-nowrap px-4 py-3 text-sm text-neutral-700 dark:text-neutral-300">
+                {participant.company}
+              </td>
+              <td className="whitespace-nowrap px-4 py-3 text-sm text-neutral-700 dark:text-neutral-300">
                 {participant.industry}
+              </td>
+              <td className="whitespace-nowrap px-4 py-3 text-sm text-neutral-700 dark:text-neutral-300">
+                {participant.companySize}
+              </td>
+              <td className="whitespace-nowrap px-4 py-3 text-sm text-neutral-700 dark:text-neutral-300">
+                {participant.city}
+              </td>
+              <td className="whitespace-nowrap px-4 py-3 text-sm text-neutral-700 dark:text-neutral-300">
+                {participant.involvementType.replace(/_/g, " ")}
+              </td>
+              <td className="whitespace-nowrap px-4 py-3 text-sm text-neutral-700 dark:text-neutral-300">
+                {participant.consent ? "Yes" : "No"}
               </td>
               <td className="whitespace-nowrap px-4 py-3 text-sm">
                 <div className="flex items-center gap-2">
