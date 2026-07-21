@@ -40,10 +40,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         designation: data.designation,
         company: data.company,
         industry: data.industry,
-        companySize: data.companySize,
+        companySize: data.companySize || "0",
         city: data.city,
         involvementType: data.involvementType,
-        consent: data.consent,
       },
     });
 
