@@ -37,7 +37,7 @@ export function Hero(): React.JSX.Element {
 
         <div className="order-1 flex justify-center lg:order-2">
           <Image
-            src="/fr-shift-hero.png"
+            src="/fr-shift-hero1.png"
             alt="FR Shift 2030 — a staircase of years from 2026 to 2030 lit in neon, representing the path to future readiness"
             width={640}
             height={1067}

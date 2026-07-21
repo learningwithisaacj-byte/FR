@@ -69,12 +69,16 @@ export const registerSchema = z.object({
   designation: z.string().trim().min(2, "Designation is required").max(120),
   company: z.string().trim().min(2, "Company name is required").max(120),
   industry: z.string().trim().min(2, "Industry is required").max(120),
-  companySize: z.string().trim().min(1, "Company size is required").max(50),
+  
+  // OPTIONAL / DEFAULTS: Allows empty string "" so it won't block validation
+  companySize: z.string().trim().max(50).optional().or(z.literal("")),
+  
   city: z.string().trim().min(2, "City is required").max(100),
   involvementType: z.enum(involvementTypeValues, {
     message: "Please select how you'd like to be involved",
   }),
-  consent: z.literal(true, { message: "Consent is required to register" }),
+  
+  // REMOVED: consent checkbox requirement
 });
 
 export type RegisterInput = z.infer<typeof registerSchema>;
