@@ -24,38 +24,9 @@ export const industryOptions = [
 // Indian mobile numbers start with 6, 7, 8, or 9 after the optional country code / leading 0.
 const INDIAN_MOBILE_REGEX = /^(?:\+91|91|0)?[6-9]\d{9}$/;
 
-// Common free/personal email providers — not accepted as a work email.
-const BLOCKED_EMAIL_DOMAINS = [
-  "gmail.com",
-  "yahoo.com",
-  "yahoo.co.in",
-  "hotmail.com",
-  "outlook.com",
-  "live.com",
-  "aol.com",
-  "icloud.com",
-  "protonmail.com",
-  "rediffmail.com",
-  "zoho.com",
-];
-
-function isCompanyEmail(email: string): boolean {
-  const domain = email.split("@")[1]?.toLowerCase().trim();
-  if (!domain) {
-    return false;
-  }
-  return !BLOCKED_EMAIL_DOMAINS.includes(domain);
-}
-
 export const registerSchema = z.object({
   fullName: z.string().trim().min(2, "Full name is too short").max(120),
-  email: z
-    .string()
-    .trim()
-    .email("Invalid email address")
-    .refine(isCompanyEmail, {
-      message: "Please use your company email — personal addresses (Gmail, Yahoo, etc.) aren't accepted",
-    }),
+  email: z.string().trim().email("Invalid email address"),
   mobile: z
     .string()
     .trim()

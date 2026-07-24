@@ -228,23 +228,17 @@ export function RegistrationForm(): React.JSX.Element {
 
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300">
-                Work Email ID <span className="text-lime-600 dark:text-lime-400">*</span>
+                Email ID <span className="text-lime-600 dark:text-lime-400">*</span>
               </label>
               <input
                 id="email"
                 type="email"
                 autoComplete="email"
-                placeholder="you@company.com"
+                placeholder="you@example.com"
                 {...register("email")}
                 aria-invalid={!!errors.email}
                 className={inputClass(!!errors.email)}
               />
-              {!errors.email && (
-                <p className="mt-1.5 text-xs text-neutral-500 dark:text-neutral-400">
-                  Company email only — personal addresses (Gmail, Yahoo, etc.)
-                  aren&apos;t accepted.
-                </p>
-              )}
               <FieldError message={errors.email?.message} />
             </div>
 
