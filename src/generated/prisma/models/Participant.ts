@@ -20,8 +20,18 @@ export type ParticipantModel = runtime.Types.Result.DefaultSelection<Prisma.$Par
 
 export type AggregateParticipant = {
   _count: ParticipantCountAggregateOutputType | null
+  _avg: ParticipantAvgAggregateOutputType | null
+  _sum: ParticipantSumAggregateOutputType | null
   _min: ParticipantMinAggregateOutputType | null
   _max: ParticipantMaxAggregateOutputType | null
+}
+
+export type ParticipantAvgAggregateOutputType = {
+  seats: number | null
+}
+
+export type ParticipantSumAggregateOutputType = {
+  seats: number | null
 }
 
 export type ParticipantMinAggregateOutputType = {
@@ -39,6 +49,8 @@ export type ParticipantMinAggregateOutputType = {
   involvementType: $Enums.InvolvementType | null
   consent: boolean | null
   status: $Enums.RegistrationStatus | null
+  seats: number | null
+  reminderSentAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -58,6 +70,8 @@ export type ParticipantMaxAggregateOutputType = {
   involvementType: $Enums.InvolvementType | null
   consent: boolean | null
   status: $Enums.RegistrationStatus | null
+  seats: number | null
+  reminderSentAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -77,11 +91,21 @@ export type ParticipantCountAggregateOutputType = {
   involvementType: number
   consent: number
   status: number
+  seats: number
+  reminderSentAt: number
   createdAt: number
   updatedAt: number
   _all: number
 }
 
+
+export type ParticipantAvgAggregateInputType = {
+  seats?: true
+}
+
+export type ParticipantSumAggregateInputType = {
+  seats?: true
+}
 
 export type ParticipantMinAggregateInputType = {
   id?: true
@@ -98,6 +122,8 @@ export type ParticipantMinAggregateInputType = {
   involvementType?: true
   consent?: true
   status?: true
+  seats?: true
+  reminderSentAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -117,6 +143,8 @@ export type ParticipantMaxAggregateInputType = {
   involvementType?: true
   consent?: true
   status?: true
+  seats?: true
+  reminderSentAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -136,6 +164,8 @@ export type ParticipantCountAggregateInputType = {
   involvementType?: true
   consent?: true
   status?: true
+  seats?: true
+  reminderSentAt?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -179,6 +209,18 @@ export type ParticipantAggregateArgs<ExtArgs extends runtime.Types.Extensions.In
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: ParticipantAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: ParticipantSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: ParticipantMinAggregateInputType
@@ -209,6 +251,8 @@ export type ParticipantGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   _count?: ParticipantCountAggregateInputType | true
+  _avg?: ParticipantAvgAggregateInputType
+  _sum?: ParticipantSumAggregateInputType
   _min?: ParticipantMinAggregateInputType
   _max?: ParticipantMaxAggregateInputType
 }
@@ -228,9 +272,13 @@ export type ParticipantGroupByOutputType = {
   involvementType: $Enums.InvolvementType
   consent: boolean
   status: $Enums.RegistrationStatus
+  seats: number
+  reminderSentAt: Date | null
   createdAt: Date
   updatedAt: Date
   _count: ParticipantCountAggregateOutputType | null
+  _avg: ParticipantAvgAggregateOutputType | null
+  _sum: ParticipantSumAggregateOutputType | null
   _min: ParticipantMinAggregateOutputType | null
   _max: ParticipantMaxAggregateOutputType | null
 }
@@ -268,6 +316,8 @@ export type ParticipantWhereInput = {
   involvementType?: Prisma.EnumInvolvementTypeFilter<"Participant"> | $Enums.InvolvementType
   consent?: Prisma.BoolFilter<"Participant"> | boolean
   status?: Prisma.EnumRegistrationStatusFilter<"Participant"> | $Enums.RegistrationStatus
+  seats?: Prisma.IntFilter<"Participant"> | number
+  reminderSentAt?: Prisma.DateTimeNullableFilter<"Participant"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Participant"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Participant"> | Date | string
 }
@@ -287,6 +337,8 @@ export type ParticipantOrderByWithRelationInput = {
   involvementType?: Prisma.SortOrder
   consent?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  seats?: Prisma.SortOrder
+  reminderSentAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -309,6 +361,8 @@ export type ParticipantWhereUniqueInput = Prisma.AtLeast<{
   involvementType?: Prisma.EnumInvolvementTypeFilter<"Participant"> | $Enums.InvolvementType
   consent?: Prisma.BoolFilter<"Participant"> | boolean
   status?: Prisma.EnumRegistrationStatusFilter<"Participant"> | $Enums.RegistrationStatus
+  seats?: Prisma.IntFilter<"Participant"> | number
+  reminderSentAt?: Prisma.DateTimeNullableFilter<"Participant"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Participant"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Participant"> | Date | string
 }, "id" | "participantCode" | "email">
@@ -328,11 +382,15 @@ export type ParticipantOrderByWithAggregationInput = {
   involvementType?: Prisma.SortOrder
   consent?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  seats?: Prisma.SortOrder
+  reminderSentAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ParticipantCountOrderByAggregateInput
+  _avg?: Prisma.ParticipantAvgOrderByAggregateInput
   _max?: Prisma.ParticipantMaxOrderByAggregateInput
   _min?: Prisma.ParticipantMinOrderByAggregateInput
+  _sum?: Prisma.ParticipantSumOrderByAggregateInput
 }
 
 export type ParticipantScalarWhereWithAggregatesInput = {
@@ -353,6 +411,8 @@ export type ParticipantScalarWhereWithAggregatesInput = {
   involvementType?: Prisma.EnumInvolvementTypeWithAggregatesFilter<"Participant"> | $Enums.InvolvementType
   consent?: Prisma.BoolWithAggregatesFilter<"Participant"> | boolean
   status?: Prisma.EnumRegistrationStatusWithAggregatesFilter<"Participant"> | $Enums.RegistrationStatus
+  seats?: Prisma.IntWithAggregatesFilter<"Participant"> | number
+  reminderSentAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Participant"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Participant"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Participant"> | Date | string
 }
@@ -372,6 +432,8 @@ export type ParticipantCreateInput = {
   involvementType: $Enums.InvolvementType
   consent?: boolean
   status?: $Enums.RegistrationStatus
+  seats?: number
+  reminderSentAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -391,6 +453,8 @@ export type ParticipantUncheckedCreateInput = {
   involvementType: $Enums.InvolvementType
   consent?: boolean
   status?: $Enums.RegistrationStatus
+  seats?: number
+  reminderSentAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -410,6 +474,8 @@ export type ParticipantUpdateInput = {
   involvementType?: Prisma.EnumInvolvementTypeFieldUpdateOperationsInput | $Enums.InvolvementType
   consent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumRegistrationStatusFieldUpdateOperationsInput | $Enums.RegistrationStatus
+  seats?: Prisma.IntFieldUpdateOperationsInput | number
+  reminderSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -429,6 +495,8 @@ export type ParticipantUncheckedUpdateInput = {
   involvementType?: Prisma.EnumInvolvementTypeFieldUpdateOperationsInput | $Enums.InvolvementType
   consent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumRegistrationStatusFieldUpdateOperationsInput | $Enums.RegistrationStatus
+  seats?: Prisma.IntFieldUpdateOperationsInput | number
+  reminderSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -448,6 +516,8 @@ export type ParticipantCreateManyInput = {
   involvementType: $Enums.InvolvementType
   consent?: boolean
   status?: $Enums.RegistrationStatus
+  seats?: number
+  reminderSentAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -467,6 +537,8 @@ export type ParticipantUpdateManyMutationInput = {
   involvementType?: Prisma.EnumInvolvementTypeFieldUpdateOperationsInput | $Enums.InvolvementType
   consent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumRegistrationStatusFieldUpdateOperationsInput | $Enums.RegistrationStatus
+  seats?: Prisma.IntFieldUpdateOperationsInput | number
+  reminderSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -486,6 +558,8 @@ export type ParticipantUncheckedUpdateManyInput = {
   involvementType?: Prisma.EnumInvolvementTypeFieldUpdateOperationsInput | $Enums.InvolvementType
   consent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumRegistrationStatusFieldUpdateOperationsInput | $Enums.RegistrationStatus
+  seats?: Prisma.IntFieldUpdateOperationsInput | number
+  reminderSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -505,8 +579,14 @@ export type ParticipantCountOrderByAggregateInput = {
   involvementType?: Prisma.SortOrder
   consent?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  seats?: Prisma.SortOrder
+  reminderSentAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type ParticipantAvgOrderByAggregateInput = {
+  seats?: Prisma.SortOrder
 }
 
 export type ParticipantMaxOrderByAggregateInput = {
@@ -524,6 +604,8 @@ export type ParticipantMaxOrderByAggregateInput = {
   involvementType?: Prisma.SortOrder
   consent?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  seats?: Prisma.SortOrder
+  reminderSentAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -543,8 +625,14 @@ export type ParticipantMinOrderByAggregateInput = {
   involvementType?: Prisma.SortOrder
   consent?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  seats?: Prisma.SortOrder
+  reminderSentAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type ParticipantSumOrderByAggregateInput = {
+  seats?: Prisma.SortOrder
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -565,6 +653,18 @@ export type BoolFieldUpdateOperationsInput = {
 
 export type EnumRegistrationStatusFieldUpdateOperationsInput = {
   set?: $Enums.RegistrationStatus
+}
+
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -588,6 +688,8 @@ export type ParticipantSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   involvementType?: boolean
   consent?: boolean
   status?: boolean
+  seats?: boolean
+  reminderSentAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["participant"]>
@@ -607,6 +709,8 @@ export type ParticipantSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   involvementType?: boolean
   consent?: boolean
   status?: boolean
+  seats?: boolean
+  reminderSentAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["participant"]>
@@ -626,6 +730,8 @@ export type ParticipantSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   involvementType?: boolean
   consent?: boolean
   status?: boolean
+  seats?: boolean
+  reminderSentAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["participant"]>
@@ -645,11 +751,13 @@ export type ParticipantSelectScalar = {
   involvementType?: boolean
   consent?: boolean
   status?: boolean
+  seats?: boolean
+  reminderSentAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ParticipantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "participantCode" | "fullName" | "email" | "mobile" | "linkedinUrl" | "designation" | "company" | "industry" | "companySize" | "city" | "involvementType" | "consent" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["participant"]>
+export type ParticipantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "participantCode" | "fullName" | "email" | "mobile" | "linkedinUrl" | "designation" | "company" | "industry" | "companySize" | "city" | "involvementType" | "consent" | "status" | "seats" | "reminderSentAt" | "createdAt" | "updatedAt", ExtArgs["result"]["participant"]>
 
 export type $ParticipantPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Participant"
@@ -669,6 +777,8 @@ export type $ParticipantPayload<ExtArgs extends runtime.Types.Extensions.Interna
     involvementType: $Enums.InvolvementType
     consent: boolean
     status: $Enums.RegistrationStatus
+    seats: number
+    reminderSentAt: Date | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["participant"]>
@@ -1108,6 +1218,8 @@ export interface ParticipantFieldRefs {
   readonly involvementType: Prisma.FieldRef<"Participant", 'InvolvementType'>
   readonly consent: Prisma.FieldRef<"Participant", 'Boolean'>
   readonly status: Prisma.FieldRef<"Participant", 'RegistrationStatus'>
+  readonly seats: Prisma.FieldRef<"Participant", 'Int'>
+  readonly reminderSentAt: Prisma.FieldRef<"Participant", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Participant", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Participant", 'DateTime'>
 }

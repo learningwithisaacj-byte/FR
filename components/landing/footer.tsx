@@ -44,10 +44,10 @@ export function Footer(): React.JSX.Element {
               {CONTACT_PHONE_NUMBERS.map((number) => (
                 <li key={number}>
                   <a
-                    href={`tel:${number}`}
+                    href={`tel:${number.replace(/\s/g, "")}`}
                     className="transition hover:text-sky-600 dark:hover:text-sky-400"
                   >
-                    +91 {number}
+                    {number}
                   </a>
                 </li>
               ))}

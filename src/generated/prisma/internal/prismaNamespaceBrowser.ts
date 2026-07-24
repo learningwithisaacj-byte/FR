@@ -86,6 +86,8 @@ export const ParticipantScalarFieldEnum = {
   involvementType: 'involvementType',
   consent: 'consent',
   status: 'status',
+  seats: 'seats',
+  reminderSentAt: 'reminderSentAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

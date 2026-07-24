@@ -1,5 +1,6 @@
 // /lib/constants/site.ts
 
+export const EVENT_NAME = "FR Shift 2030";
 export const EVENT_DATE_ISO = "2026-07-31T09:00:00+05:30";
 export const EVENT_DATE_LABEL = "31st July 2026";
 
@@ -7,8 +8,8 @@ export const EVENT_DATE_LABEL = "31st July 2026";
 export const CONTACT_EMAIL = "Support@findingrootshr.com";
 
 export const CONTACT_PHONE_NUMBERS = [
-  "7093010059",
-  "7386334209",
+  "+91 70930 10059",
+  "+91 73863 34209",
 ];
 
 export const SOCIAL_LINKS = {
@@ -20,3 +21,10 @@ export const SOCIAL_LINKS = {
 
 export const EVENT_VENUE = "TBD"; // Update with actual venue
 export const EVENT_CITY = "Hyderabad, India"; // Update with actual city
+
+// Condensed takeaways for tight layouts (register page side panel).
+export const TAKEAWAYS_SHORT = [
+  "Strategic decisions to adapt with confidence",
+  "Capability shifts that rarely surface in Boardrooms",
+  "Practical frameworks for the decade ahead",
+];

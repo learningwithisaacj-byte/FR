@@ -2,6 +2,7 @@
 
 import { NextResponse, type NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { sendRegistrationConfirmation } from "@/lib/email";
 import { registerSchema } from "@/lib/schemas/register";
 import { Prisma } from "@/src/generated/prisma/client";
 
@@ -46,6 +47,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       },
     });
 
+    // Email failure must not fail the registration — the participant is
+    // already saved; the admin dashboard remains the source of truth.
+    await sendRegistrationConfirmation(participant).catch((error) => {
+      console.error("Confirmation email failed:", error);
+    });
 
     return NextResponse.json(
       { participantCode: participant.participantCode },
