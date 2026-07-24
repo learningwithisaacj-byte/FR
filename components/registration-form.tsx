@@ -13,7 +13,7 @@ import {
   industryOptions,
   type RegisterInput,
 } from "@/lib/schemas/register";
-import { EVENT_DATE_LABEL } from "@/lib/constants/site";
+import { EVENT_DATE_LABEL, CONTACT_EMAIL } from "@/lib/constants/site";
 
 type Step = 1 | 2;
 
@@ -509,6 +509,16 @@ export function RegistrationForm(): React.JSX.Element {
                 {success.email}
               </span>
               . Keep the code handy for check-in.
+            </p>
+
+            <p className="mt-2 text-xs text-neutral-500 dark:text-neutral-400">
+              Questions? Reach us at{" "}
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="font-medium text-lime-600 hover:underline dark:text-lime-400"
+              >
+                {CONTACT_EMAIL}
+              </a>
             </p>
 
             <div className="mt-6 flex gap-3">
